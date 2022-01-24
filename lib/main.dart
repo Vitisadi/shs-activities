@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import 'calevent.dart';
+import 'infograbber.dart';
 
 
 void main() {
   runApp(const MyApp());
-  addEvents();
+  createEvents();
+  //infoGrabber.gatherInfo();
 }
 
 class MyApp extends StatelessWidget {
@@ -17,11 +19,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'SHS Activities',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'SHS Activities'),
     );
   }
 }
@@ -107,14 +109,44 @@ class _MyHomePageState extends State<MyHomePage> {
       _selectedEvents.value = _getEventsForDay(end);
     }
   }
-
   @override
   Widget build(BuildContext context) {
     // 1
     return Scaffold(
       // 2
       appBar: AppBar(
+        // title: Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     Container(
+        //     alignment: Alignment.centerLeft,
+        //     child: Image.asset(
+        //           'assets/staplesLogo.png',
+        //           fit: BoxFit.contain,
+        //           height: 32,
+        //         ),
+        //     ),
+        //     Container(
+        //         padding: const EdgeInsets.all(8.0), child: Text(widget.title)
+        //     )
+        //   ],
+        // ),
+        leading: Image.asset(
+                  'assets/staplesLogo.png',
+                  fit: BoxFit.contain,
+                  height: 32,
+                ),
         title: Text(widget.title),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            onPressed: () {
+              createEvents();
+            },
+            icon: const Icon(Icons.refresh),
+          )
+        ],
       ),
       // 3
       body: SafeArea(
@@ -122,66 +154,66 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Container(
           child: Column(
             children: <Widget>[
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      alignment: Alignment.topLeft,
-                      width: MediaQuery.of(context).size.width * 0.33,
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      //decoration: BoxDecoration(color: Colors.greenAccent),
-                      child: const Image (
-                        image: AssetImage("assets/staplesLogo.png"),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width * 0.33,
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      //decoration: BoxDecoration(color: Colors.greenAccent),
-                      child: const Text(
-                          'SHS Activities',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w900,
-                            color: Colors.black,
-                          ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      alignment: Alignment.topRight,
-                      width: MediaQuery.of(context).size.width * 0.33,
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      //decoration: BoxDecoration(color: Colors.greenAccent),
-                      child: ElevatedButton(
-                        onPressed: () {
-
-                        },
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.transparent,
-                            ),
-                        child: const Text(
-                          '🔎',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.w900,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       flex: 1,
+              //       child: Container(
+              //         alignment: Alignment.topLeft,
+              //         width: MediaQuery.of(context).size.width * 0.33,
+              //         height: MediaQuery.of(context).size.height * 0.05,
+              //         //decoration: BoxDecoration(color: Colors.greenAccent),
+              //         child: const Image (
+              //           image: AssetImage("assets/staplesLogo.png"),
+              //         ),
+              //       ),
+              //     ),
+              //     Expanded(
+              //       flex: 1,
+              //       child: Container(
+              //         alignment: Alignment.center,
+              //         width: MediaQuery.of(context).size.width * 0.33,
+              //         height: MediaQuery.of(context).size.height * 0.05,
+              //         //decoration: BoxDecoration(color: Colors.greenAccent),
+              //         child: const Text(
+              //             'SHS Activities',
+              //             textAlign: TextAlign.center,
+              //             style: TextStyle(
+              //               fontSize: 20.0,
+              //               fontWeight: FontWeight.w900,
+              //               color: Colors.black,
+              //             ),
+              //         ),
+              //       ),
+              //     ),
+              //     Expanded(
+              //       flex: 1,
+              //       child: Container(
+              //         alignment: Alignment.topRight,
+              //         width: MediaQuery.of(context).size.width * 0.33,
+              //         height: MediaQuery.of(context).size.height * 0.05,
+              //         //decoration: BoxDecoration(color: Colors.greenAccent),
+              //         child: ElevatedButton(
+              //           onPressed: () {
+              //
+              //           },
+              //           style: ElevatedButton.styleFrom(
+              //               primary: Colors.transparent,
+              //               ),
+              //           child: const Text(
+              //             '🔎',
+              //             textAlign: TextAlign.right,
+              //             style: TextStyle(
+              //               fontSize: 30.0,
+              //               fontWeight: FontWeight.w900,
+              //               color: Colors.black,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               TableCalendar<Event>(
                 firstDay: kFirstDay,
                 lastDay: kLastDay,
@@ -230,8 +262,12 @@ class _MyHomePageState extends State<MyHomePage> {
                           //),
                           child: Card(
                             child: ListTile(
-                              leading: FlutterLogo(size: 56.0),
-                              //onTap: () => print('${value[index]}'),
+                              leading: Image.asset(
+                                'assets/img' + value[index].logo +'.png',
+                                fit: BoxFit.contain,
+                                height: 56,
+                              ), //abc
+                              onTap: () => print(value[index].logo),
                               title: Text(value[index].title),
                               subtitle: Text(value[index].startTime + ' - ' + value[index].endTime),
                               trailing: IconButton(
@@ -350,19 +386,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   ),
                                                 ),
                                               ),
-                                              //test
-                                              Container(
-                                                padding: const EdgeInsets.all(4.0),
-                                                child: RichText(
-                                                  text: TextSpan(
-                                                    style: DefaultTextStyle.of(context).style,
-                                                    children: <TextSpan>[
-                                                      TextSpan(text: 'Contact: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                                                      TextSpan(text: value[index].contact),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
                                             ],
                                           ),
                                         ),
@@ -405,6 +428,8 @@ class _MyHomePageState extends State<MyHomePage> {
 //https://stackoverflow.com/questions/68166479/adding-events-to-table-calendar
 //https://github.com/aleksanderwozniak/table_calendar/blob/master/example/lib/pages/events_example.dart
 //https://pub.dev/packages/table_calendar
+
+
 
 
 
