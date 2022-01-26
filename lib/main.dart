@@ -139,14 +139,14 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         centerTitle: true,
         automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            onPressed: () {
-              createEvents();
-            },
-            icon: const Icon(Icons.refresh),
-          )
-        ],
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {
+        //       createEvents();
+        //     },
+        //     icon: const Icon(Icons.refresh),
+        //   )
+        // ],
       ),
       // 3
       body: SafeArea(
@@ -154,66 +154,6 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Container(
           child: Column(
             children: <Widget>[
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       flex: 1,
-              //       child: Container(
-              //         alignment: Alignment.topLeft,
-              //         width: MediaQuery.of(context).size.width * 0.33,
-              //         height: MediaQuery.of(context).size.height * 0.05,
-              //         //decoration: BoxDecoration(color: Colors.greenAccent),
-              //         child: const Image (
-              //           image: AssetImage("assets/staplesLogo.png"),
-              //         ),
-              //       ),
-              //     ),
-              //     Expanded(
-              //       flex: 1,
-              //       child: Container(
-              //         alignment: Alignment.center,
-              //         width: MediaQuery.of(context).size.width * 0.33,
-              //         height: MediaQuery.of(context).size.height * 0.05,
-              //         //decoration: BoxDecoration(color: Colors.greenAccent),
-              //         child: const Text(
-              //             'SHS Activities',
-              //             textAlign: TextAlign.center,
-              //             style: TextStyle(
-              //               fontSize: 20.0,
-              //               fontWeight: FontWeight.w900,
-              //               color: Colors.black,
-              //             ),
-              //         ),
-              //       ),
-              //     ),
-              //     Expanded(
-              //       flex: 1,
-              //       child: Container(
-              //         alignment: Alignment.topRight,
-              //         width: MediaQuery.of(context).size.width * 0.33,
-              //         height: MediaQuery.of(context).size.height * 0.05,
-              //         //decoration: BoxDecoration(color: Colors.greenAccent),
-              //         child: ElevatedButton(
-              //           onPressed: () {
-              //
-              //           },
-              //           style: ElevatedButton.styleFrom(
-              //               primary: Colors.transparent,
-              //               ),
-              //           child: const Text(
-              //             '🔎',
-              //             textAlign: TextAlign.right,
-              //             style: TextStyle(
-              //               fontSize: 30.0,
-              //               fontWeight: FontWeight.w900,
-              //               color: Colors.black,
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
               TableCalendar<Event>(
                 firstDay: kFirstDay,
                 lastDay: kLastDay,
@@ -255,11 +195,6 @@ class _MyHomePageState extends State<MyHomePage> {
                             horizontal: 12.0,
                             vertical: 4.0,
                           ),
-                          //decoration: BoxDecoration(
-                            // border: Border.all(),
-                            // borderRadius: BorderRadius.circular(12.0),
-                            //color: Colors.red,
-                          //),
                           child: Card(
                             child: ListTile(
                               leading: Image.asset(
